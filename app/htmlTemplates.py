@@ -28,7 +28,7 @@ css = '''
 bot_template = '''
 <div class="chat-message bot">
     <div class="avatar">
-        <img src="app/static/robot.jpg" style="max-height: 78px; max-width: 78px; border-radius: 50%; object-fit: cover;">
+        <img src="https://imgs.search.brave.com/OwozJ6gedfrWDrAvhZ4A5shV1VWwP39FVHhsbt4HknE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4t/aWNvbnMtcG5nLmZy/ZWVwaWsuY29tLzI1/Ni8xMzg4OS8xMzg4/OTE2MS5wbmc_c2Vt/dD1haXNfd2hpdGVf/bGFiZWw" style="height: 40x; width: 40px; border-radius: 100%; object-fit: cover;">
     </div>
     <div class="message">{{MSG}}</div>
 </div>
@@ -37,7 +37,7 @@ bot_template = '''
 user_template = '''
 <div class="chat-message user">
     <div class="avatar">
-        <img src="app/static/user.jpg">
+        <img src="https://imgs.search.brave.com/ppfHrzorpwKew4689uydkpWjCxR8cqA51T4rBrJ0M00/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/cGl4YWJheS5jb20v/cGhvdG8vMjAxOC8w/NC8xOC8xOC81Ni91/c2VyLTMzMzEyNTZf/MTI4MC5wbmc"  style="height: 40px; width: 40px; border-radius: 100%; object-fit: cover;">
     </div>    
     <div class="message">{{MSG}}</div>
 </div>

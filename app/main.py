@@ -11,7 +11,7 @@ class ChatBot:
         self.conversation = None
         self.history = None
         
-        df = pd.read_csv("data/final.csv", sep=";")
+        df = pd.read_csv("../data/final.csv", sep=";")
         if "model" not in st.session_state:
           st.session_state.model = QuestionAnsweringModel(df)
 
@@ -22,7 +22,7 @@ class ChatBot:
         load_dotenv()
 
         st.set_page_config(page_title='Amazon Chatbot',
-                           page_icon=':robot:', initial_sidebar_state='auto')
+                           page_icon='./static/robot.jpg', initial_sidebar_state='auto')
 
         if "history" not in st.session_state:
             st.session_state.history = [
