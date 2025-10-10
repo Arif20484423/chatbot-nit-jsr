@@ -4,7 +4,8 @@ import streamlit as st
 from htmlTemplates import css, bot_template, user_template
 from generate import QuestionAnsweringModel
 import pandas as pd
-
+from deep_translator import GoogleTranslator
+from langdetect import detect
 
 class ChatBot:
     def __init__(self):
@@ -61,11 +62,18 @@ class ChatBot:
 
     def handle_user_input(self, user_question):
         if user_question:
+            detected_language=detect(user_question)
+            print(detected_language)
+            translated_query = GoogleTranslator(source='auto', target='hi').translate(user_question)
+            print(translated_query)
+            final_answer = GoogleTranslator(source='auto', target=detected_language).translate(translated_query)
+            print(final_answer)
+
             st.session_state.history.append({
                 "role": "user",
                 "content": user_question
             })
-
+            
             response_content = self.generate_response(user_question)
             st.session_state.history.append({
                 "role": "bot",
