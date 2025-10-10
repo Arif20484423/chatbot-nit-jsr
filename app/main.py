@@ -1,6 +1,7 @@
 import logging
 from dotenv import load_dotenv
 import streamlit as st
+from streamlit_mic_recorder import speech_to_text
 from htmlTemplates import css, bot_template, user_template
 from generate import QuestionAnsweringModel
 import pandas as pd
@@ -63,21 +64,17 @@ class ChatBot:
     def handle_user_input(self, user_question):
         if user_question:
             detected_language=detect(user_question)
-            print(detected_language)
-            translated_query = GoogleTranslator(source='auto', target='hi').translate(user_question)
-            print(translated_query)
-            final_answer = GoogleTranslator(source='auto', target=detected_language).translate(translated_query)
-            print(final_answer)
-
+            translated_question = GoogleTranslator(source='auto', target='en').translate(user_question)
             st.session_state.history.append({
                 "role": "user",
-                "content": user_question
+                "content": translated_question
             })
             
-            response_content = self.generate_response(user_question)
+            response_content = self.generate_response(translated_question)
+            final_answer = GoogleTranslator(source='auto', target=detected_language).translate(response_content)
             st.session_state.history.append({
                 "role": "bot",
-                "content": response_content
+                "content": final_answer
             })
 
     def load_ui(self):
@@ -88,6 +85,12 @@ class ChatBot:
         st.title('Hello, I am an Amazon SageMaker Expert 👩🏻‍🦰')
         user_question = st.text_input('Ask a question about Amazon SageMaker:')
 
+        audio_text = speech_to_text(language="auto", start_prompt="Start recording", stop_prompt="Stop recording", key='stt')
+        if audio_text:
+            user_question=audio_text
+            print(audio_text)
+            st.write("Voice text: ",audio_text)
+        
         self.handle_user_input(user_question)
 
         self.display_messages(st.session_state.history)
@@ -99,3 +102,12 @@ class ChatBot:
 if __name__ == "__main__":
     chatbot = ChatBot()
     chatbot.run()
+
+
+# https://www.shiksha.com/college/nit-jamshedpur-national-institute-of-technology-24366/questions-15?sort_by=relevance
+# https://education.indianexpress.com/engineering-university/national-institute-of-technology-nit-jamshedpur#faqs
+# https://www.indcareer.com/en/nit-jamshedpur-admission/#Frequently_Asked_Questions_FAQs
+# https://www.collegedekho.com/colleges/nit-jamshedpur-qna
+# https://www.careers360.com/university/national-institute-of-technology-jamshedpur/all-questions?page=15
+# https://www.upgrad.com/universities/nit-jamshedpur/admissions/
+# https://collegedunia.com/qna?college=25584
