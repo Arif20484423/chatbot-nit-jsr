@@ -74,20 +74,25 @@ class ChatBot:
                     '{{MSG}}', message['content']), unsafe_allow_html=True)
 
     def handle_user_input(self, user_question):
-        if user_question:
-            detected_language=detect(user_question)
-            translated_question = GoogleTranslator(source='auto', target='en').translate(user_question)
-            st.session_state.history.append({
-                "role": "user",
-                "content": translated_question
-            })
+        user_answer = self.generate_response(user_question)
+        st.session_state.history.append({
+            "role": "bot",
+            "content": user_answer
+        })
+        # if user_question:
+        #     detected_language=detect(user_question)
+        #     translated_question = GoogleTranslator(source='auto', target='en').translate(user_question)
+        #     st.session_state.history.append({
+        #         "role": "user",
+        #         "content": translated_question
+        #     })
             
-            response_content = self.generate_response(translated_question)
-            final_answer = GoogleTranslator(source='auto', target=detected_language).translate(response_content)
-            st.session_state.history.append({
-                "role": "bot",
-                "content": final_answer
-            })
+        #     response_content = self.generate_response(translated_question)
+        #     final_answer = GoogleTranslator(source='auto', target=detected_language).translate(response_content)
+        #     st.session_state.history.append({
+        #         "role": "bot",
+        #         "content": final_answer
+        #     })
 
     def load_ui(self):
         self.load_css_styles()
